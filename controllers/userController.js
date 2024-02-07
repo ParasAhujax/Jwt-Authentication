@@ -47,35 +47,39 @@ async function handleUserLogin(req,res){
         res.send(err.message)
     }
 }
-async function checkForLogin(req,res){
-    const token = req.cookies.token;
+// async function checkForLogin(req,res){
+//     const token = req.cookies.token;
 
-    if(!token){
-        return res.json({message: "not signed in"});
-    }
+//     if(!token){
+//         return res.json({message: "not signed in"});
+//     }
 
-    try{
-        const verifiedToken = jwt.verify(token, 'secret');
+//     try{
+//         const verifiedToken = jwt.verify(token, 'secret');
         
-        const email = verifiedToken.email;
+//         const email = verifiedToken.email;
         
-        const user = await User.findOne({email});
+//         const user = await User.findOne({email});
         
-        if(!user){
-            return res.json({message:"user is not present in database"})
-        }
+//         if(!user){
+//             return res.json({message:"user is not present in database"})
+//         }
             
-        req.user = user;
-        res.json({message:`hello ${req.user.name} this is your text: ${req.user.text}`})
+//         req.user = user;
+//         res.json({message:`hello ${req.user.name} this is your text: ${req.user.text}`})
             
-    }
-    catch(err){
-        console.log(err);
-        res.send("DD")
-    }
-}
+//     }
+//     catch(err){
+//         console.log(err);
+//         res.send(err.message);
+//     }
+// }
+/*  better to use a middleware instead of constroller for verifying jwt credentials
+    because middleware allows you to perform further actions 
+*/
+
 module.exports = {
     handleUserLogin,
     handleUserSignup,
-    checkForLogin
+    // checkForLogin
 }

@@ -13,9 +13,10 @@ app.use(cookieParser());
 
 const userRoute = require('./routes/userRoute');
 const staticRoute = require('./routes/staticRoute');
+const {checkAuth} = require('./middleware/checkAuth');
 
 app.use('/user',userRoute)
-app.use('/',staticRoute);
+app.use('/',checkAuth,staticRoute);
 
 app.listen(3000,()=> {
     console.log("running on 3000")
